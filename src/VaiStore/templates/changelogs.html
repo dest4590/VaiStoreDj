@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% load static %}
+{% load custom_filters %}
+{% load humanize %}
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="{% static '/css/globalcss.css' %}" id="theme-link">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/logo.png' %}">
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/global.js' %}"></script>
+	<title>Изменения</title> 
+</head>
+
+<body>
+	<div class="preloader">
+		<div class="preloader_image"></div>
+	</div>
+
+	<a href="/">
+        <div class="title_watermark">
+            <div class="title_watermark_text">
+                <img class="logoStore" src="{% static '/img/logo.png' %}">
+                <div class="title_watermark_texthgname">Изменения</div>
+            </div>
+        </div>
+    </a>
+
+    <div class="news_content">
+        {% with changelogs.0 as changelog %}
+            <div class="news_block_active">
+                <div class="news_block_title">
+                    <a id="changelog{{ changelog.version }}">Обновление v{{ changelog.version }}</a>
+                    <br>
+                    {{ changelog.release_date|date:"d E Y" }}
+                </div>
+                
+                <div class="news_block_text">
+                    <br>Изменения:
+                    {% autoescape off %}
+                        {% for c in changelog.changes|split_by_whitespace  %}
+                            <br>• {{ c }}
+                        {% endfor %}
+                    {% endautoescape %}
+                </div>
+            </div>
+        {% endwith %}
+
+        {% for changelog in changelogs|slice:"1:" %}
+            <div class="news_block_old">
+                <div class="news_block_title">
+                    <a id="{{ changelog.version }}">Обновление v{{ changelog.version }}</a>
+                    <br>
+                    {{ changelog.release_date|date:"d E Y" }}
+                </div>
+
+                <div class="news_block_text">
+                    <br>Изменения:
+                    {% autoescape off %}
+                        {% for c in changelog.changes|split_by_whitespace  %}
+                            <br>• {{ c }}
+                        {% endfor %}
+                    {% endautoescape %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <a href="/"><img class="home" src="{% static '/img/svg/back.svg' %}"></a>
+</body>

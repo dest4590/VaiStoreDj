@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/globalcss.css' %}" id="theme-link">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/logo.png' %}">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/global.js'%}"></script>
+    <title>{{ app.name }}</title>
+</head>
+<body>
+    <div class="preloader">
+        <div class="preloader_image"></div>
+    </div>
+
+    <div class="title_watermark">
+        <div class="title_watermark_text">
+            <img class="logoStore" src="{% static '/img/logo.png' %}">
+            <div class="title_watermark_texthgname">VaiStore</div>
+        </div>
+    </div>
+
+    <div class="app_content">
+        <div class="the_app">
+            {% with '/img/apps/'|add:app.app_id|add:'/icon.png' as app_icon %}
+                <img class="icon" src="{% static app_icon %}">
+            {% endwith %}
+
+            <div class="app_name">{{ app.name }}</div>
+            <div class="author">Автор: {{ app.author }}</div>
+            <div class="app_size">Вес: {{ app.app_size }}МБ</div>
+        </div>
+
+        <a href="{{ app.link }}">
+            <div class="get_app">Скачать<img class="download_icon" src="{% static '/img/svg/download_icon.svg' %}"></div>
+        </a>
+
+
+        {% if screens|length != 0 %}
+            <div class="app_screenshot_background">
+                <div class="title_cs_dec">Скриншоты</div>
+                <div class="app_screenshot">
+                    {% for screen in screens %}
+                        {% with screen.file|cut:"VaiStore/static/" as scr %}
+                            <img class="screen" src="{% static scr %}">
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="app_description">
+            <div class="title_cs_dec">Описание</div>
+            <div class="dec">
+            {{ app.description }}
+            </div>
+        </div>
+    </div>
+
+<a href="/"><img class="home" src="{% static '/img/svg/back.svg' %}"></a>
+</body>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/globalcss.css' %}" id="theme-link">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/logo.png' %}">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/global.js' %}"></script>
+
+    <title>VaiStore REMAKE BY Purpl3</title> 
+  </head>
+  
+  <body>
+    <div class="preloader">
+        <div class="preloader_image"></div>
+    </div>
+
+    <div class="privetik" id="hi">
+        <div class="hp_1">
+           <button class="hi_button" onclick="hello()">Привет!</button>
+         </div>
+         
+         <div class="hp_2">
+            <div class="h2">
+                <img src="{% static 'img/logo.png' %}">
+                <p>VaiStore Django</p>
+            </div>
+            
+            <div class="push_notf_text">Тут собраны игры и приложения которых нету в Google Play. А также игры от малоизвестных разработчиков, мы рады каждому! :)</br><span style="color: blueviolet;font-weight: bold;font-size: 20px;">P.S: Этот ваисторе написан на слитых исходниках версии 1.4, при помощи Django</span></div>
+            
+            <button class="hi_button2" onclick="removeHello()">Окей</button>
+         </div>
+      </div>
+    
+
+    <div class="background-nav">
+        <div class="buttons_nav">
+            <img class="logoStore" src="{% static 'img/logo.png' %}">
+            
+            <a href="/settings">
+                <div id="nav" class="top_btn">Настройки</div>
+            </a>
+
+            <a href="/changelogs">
+                <div id="nav" class="top_btn">Изменения</div>
+            </a>
+
+            <a href="/admin">
+                <div id="nav-admin" class="top_btn hide">Админка</div>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="fly_splash">
+        <div class="fly_splash_img">
+            <a href="changelogs/#1.6"><img class="splash_news" src="{% static '/img/splash/php_to_django.png' %}"></a>
+        </div>
+    </div>
+  
+    
+    <!-- ИГРЫ -->
+    <div class="hg_games" id="hg_games">
+        <div class="app_group">Игры<img class="app_group_icon" src="{% static 'img/svg/app.svg' %}"></div>
+        {% for app in apps %}
+            {% if app.visible %}
+                <a href="/app/{{ app.app_id }}">
+                    <div class="app_container" id="app_container">                
+                        <p>
+                            {% with app.image|cut:"VaiStore/static/"|cut:"var/www/vaistore-dj" as image %}
+                                <img class="icon" src='{% static image %}'>
+                            {% endwith %}
+                        </p>
+                        
+                
+                        <div class="appname">{{ app.name }}</div>
+                        
+                        <div class="downloadBTN">Скачать</div>
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+    <!-- Мобильная навигация -->
+    <div class="mobile-nav">
+        <div class="mobile-nav_btn">
+            <a href="/settings"><div class="m_btn"><img class="mtab_icon" src="{% static '/img/bottom_bar/settings.svg' %}"><div class="mtab_title">Настройки</div></div></a>
+            <a href="/changelogs"><div class="m_btn"><img class="mtab_icon" src="{% static '/img/bottom_bar/changelogs.svg' %}"><div class="mtab_title">Изменения</div></div></a>
+            <a href="/admin"><div id="mnav-admin" class="m_btn hide"><img class="mtab_icon" src="{% static '/img/bottom_bar/admin.svg' %}"><div class="mtab_title">Админка</div></div></a>
+        </div>
+    </div>
